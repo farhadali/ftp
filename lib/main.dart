@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ftp/screens/main_home_page.dart';
+import 'package:ftp/userPreferances/user_preferences.dart';
 import '../screens/authentication/login_screen.dart';
 
 void main() {
@@ -20,7 +22,16 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SplashPage(title: 'Flutter Demo Home Page'),
+      //home: const SplashPage(title: 'Flutter Demo Home Page'),
+      home: FutureBuilder(
+          future: RememberUserPrefs.readUserInfo(),
+          builder: (context, dataSnapShot) {
+            if (dataSnapShot.data == null) {
+              return LoginScreen();
+            } else {
+              return MainHomePage();
+            }
+          }),
     );
   }
 }
